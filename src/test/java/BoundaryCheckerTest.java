@@ -11,7 +11,7 @@ class BoundaryCheckerTest {
         IBoundaryChecker myBoundary = new BoundaryChecker();
         boolean result = myBoundary.isInsideBoundary(0);
 //        Then: I get back FALSE
-        assert(result);
+        assertFalse(result);
     }
 
     @Test
@@ -21,7 +21,7 @@ class BoundaryCheckerTest {
         IBoundaryChecker myBoundary = new BoundaryChecker();
         boolean result = myBoundary.isInsideBoundary(1);
 //        Then: I get back True
-        assert(result);
+        assertTrue(result);
     }
 
     @Test
@@ -31,7 +31,7 @@ class BoundaryCheckerTest {
         IBoundaryChecker myBoundary = new BoundaryChecker();
         boolean result = myBoundary.isInsideBoundary(300);
 //        Then: I get back True
-        assert(result);
+        assertTrue(result);
     }
 
     @Test
@@ -40,8 +40,8 @@ class BoundaryCheckerTest {
 //        When: I enter the integer 301
         IBoundaryChecker myBoundary = new BoundaryChecker();
         boolean result = myBoundary.isInsideBoundary(301);
-//        Then: I get back True
-        assert(result);
+//        Then: I get back False
+        assertFalse(result);
     }
 
 
