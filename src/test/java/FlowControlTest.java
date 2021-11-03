@@ -20,7 +20,6 @@ public class FlowControlTest {
 
     @Test
     public void givenOneCallIsIntegerOnce() {
-    when(_intcheck.isInteger("1")).thenReturn(true);
     _flowControl.run("1");
     verify(_intcheck, times(1)).isInteger("1");
     }
@@ -28,7 +27,6 @@ public class FlowControlTest {
     @Test
     public void givenOneCallIsInsideBoundary() {
     when(_intcheck.isInteger("1")).thenReturn(true);
-    when(_boundaryChecker.isInsideBoundary(1)).thenReturn(true);
     _flowControl.run("1");
     verify(_boundaryChecker, times(1)).isInsideBoundary(1);
     }
@@ -37,21 +35,18 @@ public class FlowControlTest {
     public void givenOneCallFizzBuzzOnce() {
         when(_intcheck.isInteger("1")).thenReturn(true);
         when(_boundaryChecker.isInsideBoundary(1)).thenReturn(true);
-        when(_fizzbuzz.generate(1)).thenReturn(anyString());
         _flowControl.run("1");
         verify(_fizzbuzz, times(1)).generate(1);
     }
 
     @Test
     public void givenZeroCallIsIntegerOnce() {
-        when(_intcheck.isInteger("0")).thenReturn(true);
         _flowControl.run("0");
         verify(_intcheck, times(1)).isInteger("0");
     }
 
     @Test
     public void givenZeroCallIsInsideBoundaryOnce() {
-        when(_boundaryChecker.isInsideBoundary(0)).thenReturn(true);
         when(_intcheck.isInteger("0")).thenReturn(true);
         _flowControl.run("0");
         verify(_boundaryChecker, times(1)).isInsideBoundary(0);
@@ -59,7 +54,8 @@ public class FlowControlTest {
 
     @Test
     public void givenZeroDoNotCallFizzBuzz() {
-        when(_fizzbuzz.generate(0)).thenReturn(anyString());
+        when(_intcheck.isInteger("0")).thenReturn(true);
+        when(_boundaryChecker.isInsideBoundary(0)).thenReturn(false);
         _flowControl.run("0");
         verify(_fizzbuzz, never()).generate(anyInt());
     }
@@ -74,19 +70,14 @@ public class FlowControlTest {
     @Test
     public void givenBobDoNotCallIsInsideBoundary() {
         when(_intcheck.isInteger("bob")).thenReturn(false);
-        when(_boundaryChecker.isInsideBoundary(anyInt())).thenReturn(anyBoolean());
         _flowControl.run("bob");
         verify(_boundaryChecker, never()).isInsideBoundary(anyInt());
     }
 
     @Test
     public void givenBobDoNotCallFizzBuzz() {
-        when(_fizzbuzz.generate(anyInt())).thenReturn(anyString());
+        when(_intcheck.isInteger("bob")).thenReturn(false);
         _flowControl.run("bob");
         verify(_fizzbuzz, never()).generate(anyInt());
     }
-
-
-
-
 }
